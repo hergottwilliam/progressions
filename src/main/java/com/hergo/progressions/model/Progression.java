@@ -2,34 +2,37 @@ package com.hergo.progressions.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Progression {
 	
-	private @Id @GeneratedValue int id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO) 
+	private long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "exerciseId")
+	private Exercise exercise;
 	private String name;
 	private int level;
 	// IMAGE?
 	
-	public Progression() {}
+	protected Progression() {}
 	
 	
-	public Progression(int id, String name, int level) {
-		this.id = id;
+	public Progression(String name, int level) {
+
 		this.name = name;
 		this.level = level;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 
 	public String getName() {
 		return name;

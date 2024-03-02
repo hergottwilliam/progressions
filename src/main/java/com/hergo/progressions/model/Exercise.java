@@ -1,22 +1,36 @@
 package com.hergo.progressions.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Exercise {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO) 
+	private long id;
 	
-	private @Id @GeneratedValue int id;
 	private String name;
-	private int currentLevel;
-	private ArrayList<Progression> progressions;
+	private int currentLevel; // starts at 0
 	
+	@OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL)
+	private List<Progression> progressions;
 	
-	public Exercise(int id, String name, int currentLevel, ArrayList<Progression> progressions) {
-		this.id = id;
+	protected Exercise() {}
+	
+	public Exercise(String name, int currentLevel) {
+		this.name = name;
+		this.currentLevel = currentLevel;
+		
+	}
+	
+	public Exercise(String name, int currentLevel, List<Progression> progressions) {
 		this.name = name;
 		this.currentLevel = currentLevel;
 		this.progressions = progressions;
@@ -34,8 +48,8 @@ public class Exercise {
 		}
 	}
 	
-	public ArrayList<Progression> currentProgression() {
-		ArrayList<Progression> current = new ArrayList<>();
+	public List<Progression> currentProgression() {
+		List<Progression> current = new ArrayList<>();
 		
 		for (int i = 0; i < this.progressions.size(); i++) {
 			if (this.progressions.get(i).getLevel() == this.currentLevel) {
@@ -61,7 +75,7 @@ public class Exercise {
 		}
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -85,14 +99,23 @@ public class Exercise {
 		this.currentLevel = currentLevel;
 	}
 
-	public ArrayList<Progression> getProgressions() {
+	public List<Progression> getProgressions() {
 		return progressions;
 	}
 
-	public void setProgressions(ArrayList<Progression> progressions) {
+	public void setProgressions(List<Progression> progressions) {
 		this.progressions = progressions;
 	}
-	
-	
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Exercise [id=" + id + ", name=" + name + ", currentLevel=" + currentLevel + ", progressions="
+				+ progressions + "]";
+	}
+
 
 }
