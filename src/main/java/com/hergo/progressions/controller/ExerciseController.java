@@ -24,17 +24,6 @@ public class ExerciseController {
 	
 	/* TODO
 	 * 
-	 * Changes entire api to Path variable for id? Cleaner names?
-	 * 
-	 * Add:
-	 * 		get exercise by id
-	 * 
-	 * 	crud for progressions:
-	 * 		delete progression from exercise
-	 * 		update progression
-	 * 		get all progressions for an exercise
-	 * 		get current progression for an exercise
-	 * 
 	 * TEST EVERYTHING
 	 * 
 	*/
@@ -43,7 +32,6 @@ public class ExerciseController {
 	@PostMapping(path="/add")
 	public @ResponseBody String addNewExercise(@RequestParam String name, @RequestParam int currentLevel) {
 		Exercise newExercise = new Exercise(name, currentLevel);
-		System.out.println("Controller: " + newExercise);
 		return exerciseService.addNewExercise(newExercise);
 	}
 	
@@ -52,24 +40,48 @@ public class ExerciseController {
 		return exerciseService.getAllExercise();
 	}
 	
+	@GetMapping(path="/{exerciseId}")
+	public @ResponseBody Exercise getExerciseById(@PathVariable Long exerciseId) {
+		return exerciseService.getExerciseById(exerciseId);
+	}
+	
 	@PutMapping(path="/{exerciseId}/update")
 	public @ResponseBody String updateExercise(@PathVariable Long exerciseId, @RequestParam Exercise exercise) {
 		return exerciseService.updateExercise(exerciseId, exercise);
 	}
 	
-	
-	@DeleteMapping(path="/delete")
-	public @ResponseBody String deleteExerciseById(@RequestParam Long exerciseId) {
+	@DeleteMapping(path="/{exerciseId}/delete")
+	public @ResponseBody String deleteExerciseById(@PathVariable Long exerciseId) {
 		return exerciseService.deleteExerciseById(exerciseId);
 	}
 	
-	@PostMapping(path="/{exerciseId}/progression")
+	@PutMapping(path="/{exerciseId}/increase")
+	public @ResponseBody String increaseLevel(@PathVariable Long exerciseId) {
+		return exerciseService.increaseLevel(exerciseId);
+	}
+	
+	@PostMapping(path="/{exerciseId}/addprogression")
 	public @ResponseBody String addProgression(@PathVariable Long exerciseId, @RequestParam Progression progression) { 
 		return exerciseService.addProgression(exerciseId, progression);
 	}
 	
-	@PutMapping(path="/{exerciseId/increase")
-	public @ResponseBody String increaseLevel(@PathVariable Long exerciseId) {
-		return exerciseService.increaseLevel(exerciseId);
+	@GetMapping(path="/{exerciseId}/allprogressions")
+	public @ResponseBody Iterable<Progression> getAllProgressions(@PathVariable Long exerciseId) {
+		return exerciseService.getAllProgressions(exerciseId);
+	}
+	
+	@GetMapping(path="/{exerciseId}/current")
+	public @ResponseBody Iterable<Progression> getCurrentProgression(@PathVariable Long exerciseId) {
+		return exerciseService.getCurrentProgression(exerciseId);
+	}
+	
+	@PutMapping(path="/{exerciseId}/{progressionId}/update")
+	public @ResponseBody String updateProgression(@PathVariable Long exerciseId, @PathVariable Long progressionId, @RequestParam Progression progression) {
+		return exerciseService.updateProgression(exerciseId, progressionId, progression);
+	}
+	
+	@DeleteMapping(path="/{exerciseId}/{progressionId}/delete")
+	public @ResponseBody String deleteProgression(@PathVariable Long exerciseId, @PathVariable Long progressionId) {
+		return exerciseService.deleteProgression(exerciseId, progressionId);
 	}
 }

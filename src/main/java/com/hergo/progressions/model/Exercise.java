@@ -48,6 +48,18 @@ public class Exercise {
 		}
 	}
 	
+	public void deleteProgression(Long progressionId) {
+		for (int i = 0; i < this.progressions.size(); i++) {
+			if (this.progressions.get(i).getId() == progressionId) {
+				if (this.progressions.get(i).getLevel() <= this.currentLevel) {
+					this.currentLevel--;
+				}
+				this.progressions.remove(i);
+				return;
+			}
+		}
+	}
+	
 	public List<Progression> currentProgression() {
 		List<Progression> current = new ArrayList<>();
 		
