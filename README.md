@@ -31,4 +31,14 @@ This Java Spring Boot application allows users to track their exercise progressi
 5. Run the application
    ```sh
    mvn spring-boot:run
-6. Utilize the API endpoints to creat, read, update, or delete data.
+6. Utilize the API endpoints to create, read, update, or delete data (port 8080).
+
+## Dependencies
+
+This project has the following dependencies:
+
+- **Spring Boot Starter Data JPA**: Provides a Spring Data JPA with Hibernate implementation.
+- **Spring Boot Starter Web**: Provides a web development support, including RESTful applications.
+- **MySQL Connector/J**: MySQL JDBC driver for connecting to MySQL databases.
+- **Spring Boot Starter Test**: Provides testing support for Spring Boot applications.
+
